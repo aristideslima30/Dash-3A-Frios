@@ -1,0 +1,64 @@
+### PROMPT - FRONTEND 3A FRIOS
+
+Crie uma aplicação web responsiva em Next.js 14 (App Router) com TypeScript, usando Tailwind CSS e ShadCN/ui, para gerenciar o atendimento automatizado de uma empresa de frios chamada "3A Frios".
+
+A aplicação deve se conectar diretamente ao Supabase (já configurado com as tabelas: clientes_delivery, pedidos_delivery, campanhas_marketing e temp_messages).
+
+**Contexto do Sistema**:
+
+O fluxo do n8n processa mensagens do WhatsApp (via Evolution API), identifica clientes por telefone, orquestra múltiplos agentes de IA (Catálogo, Pedidos, Qualificação, Marketing e Atendimento) e persiste todos os dados no Supabase. As principais tabelas são:
+
+- `clientes_delivery`: nome, telefone, endereço, lead score (0–10), lead status (`novo` / `interessado` / `pronto_para_comprar`), interesse declarado, frequência de compra, valor potencial.
+- `pedidos_delivery`: itens, valor total, forma de pagamento, status, data do pedido.
+- `campanhas_marketing`: nome, produtos, oferta, data de início/fim, segmento (ex: `{ "lead_score": ">5", "interesseProduto": "contains queijo" }`).
+- `documents_delivery`: base de conhecimento vetorizada com preços e descrições de produtos (RAG).
+- `temp_messages`: mensagens temporárias para debouncing e transcrição de áudio.
+
+**Funcionalidades Essenciais**:
+
+1. **Dashboard de Atendimento em Tempo Real**
+    - Lista de clientes com conversas recentes (últimas 24h ou leads com score > 0).
+    - Colunas: nome, telefone, lead score (visual com barra ou badge colorida), status, última mensagem, data/hora.
+    - Filtros por status, lead score (ex: ≥5), tipo de interação (texto/áudio) e campanha ativa.
+    - Botão de conversar com o cliente.
+2. **Visualizador de Conversa por Cliente**
+    - Exibe histórico de mensagens (cliente vs bot) com marcação visual de qual agente respondeu (ex: badge “Catálogo”, “Pedidos”, “Marketing”).
+    - Indicadores de ações especiais: “catálogo enviado”, “endereço atualizado”, “lead qualificado”.
+    - Campo para enviar mensagem manual via WhatsApp.
+    - Botão “Forçar reprocessamento” (reenvia a última mensagem para o fluxo do n8n via webhook).
+3. **Gestão de Leads e Qualificação**
+    - Formulário para visualizar/editar manualmente: lead score, status, interesse declarado, frequência de compra.
+    - Histórico de alterações de lead score com data/hora.
+    - Botão “Qualificar como quente” (define score = 10 e status = “pronto_para_comprar”).
+4. **Gestão de Campanhas de Marketing**
+    - Tabela com campanhas ativas: nome, produtos, oferta, data de validade, segmento-alvo.
+    - Botão para criar/editar campanha com validação do campo `segmento` (JSON).
+    - Visualização de quais clientes se encaixam em cada campanha (com base em lead score e interesse).
+
+**Stack Técnica**:
+
+- **Frontend**: React + TypeScript
+- **Estilização**: Tailwind CSS
+- **Gerenciamento de Estado**: React Query (para buscar dados diretamente do Supabase)
+- **Autenticação**: Supabase Auth (login interno da equipe)
+- **Convenções**:
+- Todos os dados vêm do Supabase via `supabase.from('tabela').select()`
+- Ações manuais (ex: atualizar lead) usam `supabase.from().update()`
+- Simulações não afetam o fluxo real do n8n, apenas o estado local ou uma tabela de testes
+
+**UX/UI**:
+
+- Layout em duas colunas (lista de clientes + painel de detalhes)
+- Cores: azul (#2563eb) para confiança, laranja (#f97316) para ações (pedidos, campanhas)
+- Modo claro por padrão
+- Totalmente responsivo (funcional em mobile para uso da equipe em campo)
+
+**Observações**:
+
+- O frontend **não envia mensagens diretamente pelo WhatsApp** — apenas dispara webhooks ou simula respostas.
+- O catálogo exibido é o mesmo sincronizado do Google Drive para `documents_delivery`.
+- Priorize clareza na orquestração: mostre visualmente **quem decidiu o que** (Ana = orquestrador; agentes = executores).
+
+Não gere o backend — apenas o frontend com chamadas diretas ao Supabase usando `@supabase/supabase-js`. Inclua exemplos de hooks personalizados (ex: `useLeads`, `useConversations`) e componentes reutilizáveis.
+
+Assuma que as variáveis de ambiente NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY já estão configuradas.
