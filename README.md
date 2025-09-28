@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dashboard 3A Frios 🧊
 
-## Getting Started
+Dashboard profissional para gestão de leads, conversas e campanhas de marketing da 3A Frios.
 
-First, run the development server:
+## 🚀 Funcionalidades
+
+- **Gestão de Leads**: Visualização e gerenciamento de leads com scores e status
+- **Conversas WhatsApp**: Monitoramento de conversas e interações com clientes
+- **Campanhas**: Criação e acompanhamento de campanhas de marketing
+- **Analytics**: Análises detalhadas com métricas e insights inteligentes
+- **Configurações**: Painel completo de configurações do sistema
+
+## 🛠️ Instalação Rápida
+
+### 🪟 **Windows** (Mais comum)
+👉 **[Clique aqui para o guia completo do Windows](WINDOWS_INSTALL.md)** 👈
+
+### 🐧 Linux / 🍎 macOS
+👉 **[Guia detalhado para outros sistemas](INSTALL.md)**
+
+## ⚡ Instalação Express (se já tem Node.js)
 
 ```bash
+git clone https://github.com/aristideslima30/Dash-3A-Frios.git
+cd Dash-3A-Frios
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse: http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📦 Scripts Disponíveis
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` - Executa o projeto em modo de desenvolvimento
+- `npm run build` - Cria a versão de produção
+- `npm start` - Executa a versão de produção
+- `npm run lint` - Executa o linter para verificar o código
 
-## Learn More
+## 🏗️ Tecnologias Utilizadas
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js 15** - Framework React para produção
+- **React 19** - Biblioteca para interfaces de usuário
+- **TypeScript** - Superset do JavaScript com tipagem estática
+- **Tailwind CSS** - Framework CSS utilitário
+- **Radix UI** - Componentes acessíveis e customizáveis
+- **Lucide React** - Ícones modernos
+- **TanStack Query** - Gerenciamento de estado e cache
+- **Supabase** - Backend como serviço
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 Estrutura do Projeto
