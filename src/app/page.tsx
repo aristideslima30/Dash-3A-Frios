@@ -716,264 +716,141 @@ export default function Dashboard() {
 
           {/* Aba Configurações */}
           {activeTab === "settings" && (
-            <div className="h-full fade-in">
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-neutral-900">Configurações do Sistema</h2>
-                  <button 
-                    onClick={handleSaveSettings}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    Salvar Configurações
-                  </button>
-                </div>
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-neutral-900">Configurações do Sistema</h2>
+                <button 
+                  onClick={handleSaveSettings}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Salvar Configurações
+                </button>
+              </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Notificações */}
-                  <Card className="card-elegant">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <MessageSquare className="h-5 w-5 text-blue-600" />
-                        Notificações
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium">Notificações por Email</label>
-                        <input 
-                          type="checkbox" 
-                          className="rounded" 
-                          checked={notifications.email}
-                          onChange={(e) => setNotifications({...notifications, email: e.target.checked})}
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium">Notificações Push</label>
-                        <input 
-                          type="checkbox" 
-                          className="rounded" 
-                          checked={notifications.push}
-                          onChange={(e) => setNotifications({...notifications, push: e.target.checked})}
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium">Notificações SMS</label>
-                        <input 
-                          type="checkbox" 
-                          className="rounded" 
-                          checked={notifications.sms}
-                          onChange={(e) => setNotifications({...notifications, sms: e.target.checked})}
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium">Notificações WhatsApp</label>
-                        <input 
-                          type="checkbox" 
-                          className="rounded" 
-                          checked={notifications.whatsapp}
-                          onChange={(e) => setNotifications({...notifications, whatsapp: e.target.checked})}
-                        />
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* WhatsApp Business */}
-                  <Card className="card-elegant">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Phone className="h-5 w-5 text-green-600" />
-                        WhatsApp Business
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium">Resposta Automática</label>
-                        <input 
-                          type="checkbox" 
-                          className="rounded" 
-                          checked={whatsappConfig.autoResponse}
-                          onChange={(e) => setWhatsappConfig({...whatsappConfig, autoResponse: e.target.checked})}
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium">Horário Comercial</label>
-                        <input 
-                          type="checkbox" 
-                          className="rounded" 
-                          checked={whatsappConfig.businessHours}
-                          onChange={(e) => setWhatsappConfig({...whatsappConfig, businessHours: e.target.checked})}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium">Delay de Resposta (segundos)</label>
-                        <input 
-                          type="number" 
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          value={whatsappConfig.responseDelay}
-                          onChange={(e) => setWhatsappConfig({...whatsappConfig, responseDelay: parseInt(e.target.value)})}
-                          min={0}
-                          max={60}
-                        />
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Sistema */}
-                  <Card className="card-elegant">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Settings className="h-5 w-5 text-gray-600" />
-                        Sistema
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium">Tema</label>
-                        <select 
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          value={systemConfig.theme}
-                          onChange={(e) => setSystemConfig({...systemConfig, theme: e.target.value})}
-                        >
-                          <option value="light">Claro</option>
-                          <option value="dark">Escuro</option>
-                          <option value="auto">Automático</option>
-                        </select>
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium">Idioma</label>
-                        <select 
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          value={systemConfig.language}
-                          onChange={(e) => setSystemConfig({...systemConfig, language: e.target.value})}
-                        >
-                          <option value="pt-BR">Português (Brasil)</option>
-                          <option value="en-US">English (US)</option>
-                          <option value="es-ES">Español</option>
-                        </select>
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium">Fuso Horário</label>
-                        <select 
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          value={systemConfig.timezone}
-                          onChange={(e) => setSystemConfig({...systemConfig, timezone: e.target.value})}
-                        >
-                          <option value="America/Sao_Paulo">São Paulo (GMT-3)</option>
-                          <option value="America/New_York">New York (GMT-5)</option>
-                          <option value="Europe/London">London (GMT+0)</option>
-                        </select>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Segurança */}
-                  <Card className="card-elegant">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Star className="h-5 w-5 text-yellow-600" />
-                        Segurança
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium">Retenção de Dados (dias)</label>
-                        <input 
-                          type="number" 
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          value={systemConfig.dataRetention}
-                          onChange={(e) => setSystemConfig({...systemConfig, dataRetention: parseInt(e.target.value)})}
-                          min={30}
-                          max={3650}
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium">Autenticação 2FA</label>
-                        <input 
-                          type="checkbox" 
-                          className="rounded" 
-                          checked={securityConfig.twoFactorAuth}
-                          onChange={(e) => setSecurityConfig({...securityConfig, twoFactorAuth: e.target.checked})}
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium">Log de Auditoria</label>
-                        <input 
-                          type="checkbox" 
-                          className="rounded" 
-                          checked={securityConfig.auditLog}
-                          onChange={(e) => setSecurityConfig({...securityConfig, auditLog: e.target.checked})}
-                        />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Ações Avançadas */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Notificações */}
                 <Card className="card-elegant">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Target className="h-5 w-5 text-red-600" />
-                      Ações Avançadas
+                      <MessageSquare className="h-5 w-5 text-blue-600" />
+                      Notificações
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <button 
-                        onClick={handleExportData}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Exportar Dados
-                      </button>
-                      <button 
-                        onClick={handleBackupSystem}
-                        className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                      >
-                        Backup Sistema
-                      </button>
-                      <button 
-                        onClick={handleClearCache}
-                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                      >
-                        Limpar Cache
-                      </button>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-medium">Notificações por Email</label>
+                      <input 
+                        type="checkbox" 
+                        className="rounded" 
+                        checked={notifications.email}
+                        onChange={(e) => setNotifications({...notifications, email: e.target.checked})}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-medium">Notificações Push</label>
+                      <input 
+                        type="checkbox" 
+                        className="rounded" 
+                        checked={notifications.push}
+                        onChange={(e) => setNotifications({...notifications, push: e.target.checked})}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-medium">Notificações SMS</label>
+                      <input 
+                        type="checkbox" 
+                        className="rounded" 
+                        checked={notifications.sms}
+                        onChange={(e) => setNotifications({...notifications, sms: e.target.checked})}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-medium">Notificações WhatsApp</label>
+                      <input 
+                        type="checkbox" 
+                        className="rounded" 
+                        checked={notifications.whatsapp}
+                        onChange={(e) => setNotifications({...notifications, whatsapp: e.target.checked})}
+                      />
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Status do Sistema */}
+                {/* WhatsApp Business */}
                 <Card className="card-elegant">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <BarChart3 className="h-5 w-5 text-green-600" />
-                      Status do Sistema
+                      <Phone className="h-5 w-5 text-green-600" />
+                      WhatsApp Business
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                      <div className="text-center">
-                        <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-2"></div>
-                        <p className="text-sm font-medium">API WhatsApp</p>
-                        <p className="text-xs text-gray-500">Online</p>
-                      </div>
-                      <div className="text-center">
-                        <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-2"></div>
-                        <p className="text-sm font-medium">Banco de Dados</p>
-                        <p className="text-xs text-gray-500">Conectado</p>
-                      </div>
-                      <div className="text-center">
-                        <div className="w-3 h-3 bg-yellow-500 rounded-full mx-auto mb-2"></div>
-                        <p className="text-sm font-medium">Cache Redis</p>
-                        <p className="text-xs text-gray-500">Lento</p>
-                      </div>
-                      <div className="text-center">
-                        <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-2"></div>
-                        <p className="text-sm font-medium">Servidor</p>
-                        <p className="text-xs text-gray-500">Estável</p>
-                      </div>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-medium">Resposta Automática</label>
+                      <input 
+                        type="checkbox" 
+                        className="rounded" 
+                        checked={whatsappConfig.autoResponse}
+                        onChange={(e) => setWhatsappConfig({...whatsappConfig, autoResponse: e.target.checked})}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-medium">Horário Comercial</label>
+                      <input 
+                        type="checkbox" 
+                        className="rounded" 
+                        checked={whatsappConfig.businessHours}
+                        onChange={(e) => setWhatsappConfig({...whatsappConfig, businessHours: e.target.checked})}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Delay de Resposta (segundos)</label>
+                      <input 
+                        type="number" 
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value={whatsappConfig.responseDelay}
+                        onChange={(e) => setWhatsappConfig({...whatsappConfig, responseDelay: parseInt(e.target.value)})}
+                        min={0}
+                        max={60}
+                      />
                     </div>
                   </CardContent>
                 </Card>
               </div>
+
+              {/* Status do Sistema */}
+              <Card className="card-elegant">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5 text-green-600" />
+                    Status do Sistema
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="text-center">
+                      <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-2"></div>
+                      <p className="text-sm font-medium">API WhatsApp</p>
+                      <p className="text-xs text-gray-500">Online</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-2"></div>
+                      <p className="text-sm font-medium">Banco de Dados</p>
+                      <p className="text-xs text-gray-500">Conectado</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full mx-auto mb-2"></div>
+                      <p className="text-sm font-medium">Cache Redis</p>
+                      <p className="text-xs text-gray-500">Lento</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-2"></div>
+                      <p className="text-sm font-medium">Servidor</p>
+                      <p className="text-xs text-gray-500">Estável</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           )}
 

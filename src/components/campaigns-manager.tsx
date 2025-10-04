@@ -376,7 +376,7 @@ export function CampaignsManager() {
                         <AlertDialogHeader>
                           <AlertDialogTitle>Excluir Campanha</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Tem certeza que deseja excluir a campanha "{campaign.nome}"? 
+                            Tem certeza que deseja excluir a campanha &quot;{campaign.nome}&quot;?
                             Esta ação não pode ser desfeita.
                           </AlertDialogDescription>
                         </AlertDialogHeader>

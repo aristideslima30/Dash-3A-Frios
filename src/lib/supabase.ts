@@ -23,7 +23,7 @@ export interface ClienteDelivery {
 export interface PedidoDelivery {
   id: string
   cliente_id: string
-  itens: any[]
+  itens: unknown[]
   valor_total: number
   forma_pagamento: string
   status: string
@@ -38,7 +38,7 @@ export interface CampanhaMarketing {
   oferta: string
   data_inicio: string
   data_fim: string
-  segmento: any
+  segmento: Record<string, unknown>
   created_at: string
   updated_at?: string
 }
