@@ -17,17 +17,74 @@ export function ConversationViewer({ client }: ConversationViewerProps) {
   const [message, setMessage] = useState('')
   const { data: conversations, isLoading } = useConversations(client.id)
 
-  const handleSendMessage = () => {
-    if (!message.trim()) return
-    
-    // TODO: Implementar envio de mensagem via webhook
-    console.log('Enviando mensagem:', message, 'para cliente:', client.telefone)
-    setMessage('')
+  const handleSendMessage = async () => {
+    const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL
+    const evoServer = process.env.NEXT_PUBLIC_EVOLUTION_SERVER_URL
+    const evoInstance = process.env.NEXT_PUBLIC_EVOLUTION_INSTANCE
+    const evoApiKey = process.env.NEXT_PUBLIC_EVOLUTION_API_KEY
+
+    if (!message.trim() || !webhookUrl) {
+      console.warn('Mensagem vazia ou webhook não configurado')
+      return
+    }
+
+    try {
+      const res = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          acao: 'enviar-mensagem',
+          telefone: client.telefone,
+          mensagem: message.trim(),
+          whatsapp: {
+            evo: {
+              server_url: evoServer,
+              nomeInstancia: evoInstance,
+              apikey: evoApiKey,
+            },
+          },
+        }),
+      })
+      if (!res.ok) throw new Error(`Falha no webhook: ${res.status}`)
+      setMessage('')
+    } catch (err) {
+      console.error('Erro ao enviar ao n8n:', err)
+    }
   }
 
-  const handleReprocess = () => {
-    // TODO: Implementar reprocessamento via webhook n8n
-    console.log('Reprocessando última mensagem para cliente:', client.telefone)
+  const handleReprocess = async () => {
+    const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL
+    const evoServer = process.env.NEXT_PUBLIC_EVOLUTION_SERVER_URL
+    const evoInstance = process.env.NEXT_PUBLIC_EVOLUTION_INSTANCE
+    const evoApiKey = process.env.NEXT_PUBLIC_EVOLUTION_API_KEY
+
+    if (!webhookUrl) {
+      console.warn('Webhook não configurado')
+      return
+    }
+
+    try {
+      const res = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          acao: 'reprocessar',
+          telefoneCliente: client.telefone,
+          nomeCliente: client.nome,
+          mensagem: message.trim() || '',
+          whatsapp: {
+            evo: {
+              server_url: evoServer,
+              nomeInstancia: evoInstance,
+              apikey: evoApiKey,
+            },
+          },
+        }),
+      })
+      if (!res.ok) throw new Error(`Falha no webhook: ${res.status}`)
+    } catch (err) {
+      console.error('Erro ao reprocessar no n8n:', err)
+    }
   }
 
   if (isLoading) {

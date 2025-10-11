@@ -1,0 +1,3464 @@
+{
+  "name": "Atend_3A_Frios-MultAgent_Dash",
+  "nodes": [
+    {
+      "parameters": {
+        "model": "gpt-3.5-turbo",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "id": "4853c3c4-bbbd-47f9-bbad-42e8deec61d7",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -2352,
+        576
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "G09KOtL6AK7tLTtZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "e5bc91ae-1087-4004-a10c-2926856033ef",
+      "name": "NoOp.",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -3168,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.max(parseInt($('camposIniciais').item.json.app.debouncerTime) || 8, 8) }}"
+      },
+      "id": "ba9f4cc7-0a7d-4cbd-af8a-8196f6324abe",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -3152,
+        704
+      ],
+      "webhookId": "c48e8179-8f87-4fec-a432-470a6112c060"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7158aa0-84e0-44b1-8629-bf23fb4c0766",
+              "name": "=messages",
+              "value": "={{ $('camposIniciais').item.json.content.mensagem }}",
+              "type": "string"
+            },
+            {
+              "id": "0c4c3b74-297a-4cf2-b2b8-0feefad328ec",
+              "name": "sessionid",
+              "value": "=sessionid: {{ $('getClient').item.json?.sessionid || $('camposIniciais').item.json.meta.telefoneCliente }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "122188c8-0866-47c6-97a6-fb6d3f3174cd",
+      "name": "messages",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2992,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f9ecf2fc-da2c-4f44-897a-5dc0a2f2f379",
+              "name": "meta.telefoneCliente",
+              "value": "={{ $json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "dab7ca54-c3d2-4a36-a9ca-a0ebbd375ef5",
+              "name": "meta.nomeCliente",
+              "value": "={{ $json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "01238a36-6907-4aec-ab21-26345ed5fc96",
+              "name": "whatsapp.evo.nomeInstancia",
+              "value": "={{ $json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "81612acf-1b66-4c8e-82e4-ce8c77b31334",
+              "name": "content.mensagem",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "cc7dcfe1-8ad7-4fe8-93ec-8f643c7d08c7",
+              "name": "content.tipoMensagem",
+              "value": "={{ $json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "2dfc64f4-b222-4ea7-b095-fdd96d9fcb95",
+              "name": "content.idMensagem",
+              "value": "={{ $json.body.data.key.senderLid }}",
+              "type": "string"
+            },
+            {
+              "id": "9d947263-3b68-4c63-88ba-ef1b9de22571",
+              "name": "clinica.nomeEmpresa",
+              "value": "3A Frios",
+              "type": "string"
+            },
+            {
+              "id": "076ad2d4-b8ea-440f-9c02-f7e8417a984d",
+              "name": "whatsapp.evo.apikey",
+              "value": "={{ $json.body.apikey }}",
+              "type": "string"
+            },
+            {
+              "id": "0c237725-0428-4f1d-bddf-41bd289b3168",
+              "name": "whatsapp.evo.server_url",
+              "value": "=https://evolution-evolution-api.m1x7ft.easypanel.host",
+              "type": "string"
+            },
+            {
+              "id": "255b9c45-7769-4d09-9c50-61dcdfb7c09d",
+              "name": "app.debouncerTime",
+              "value": "8",
+              "type": "string"
+            },
+            {
+              "id": "196aeb96-5c33-4dd7-9a4f-6bd40765b7fb",
+              "name": "doc.id",
+              "value": "1SEKGQFNMKnUYRWJ5k9pfS4uvH9wh9IP7rypFoW5hzb8",
+              "type": "string"
+            },
+            {
+              "id": "aa7e8ceb-ab03-41d0-be6a-bd76e7c42770",
+              "name": "catalogo.id",
+              "value": "1XUNw1rS1dwSAbZG5mvjFFeZrermeH6u7",
+              "type": "string"
+            },
+            {
+              "id": "fc7c5c8f-b505-4a43-ae07-51eea58d6f80",
+              "name": "linkPreview",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "e30bbf8c-d5da-4410-b875-8dfe4b301798",
+              "name": "Digitando",
+              "value": "={{ 1800 }}",
+              "type": "number"
+            },
+            {
+              "id": "c4f557bd-72f1-4507-8d9d-c2a590eea2b8",
+              "name": "content.quoted",
+              "value": "={{ $json.body.content.quoted }}",
+              "type": "string"
+            },
+            {
+              "id": "lead_score",
+              "name": "lead.leadScore",
+              "value": 0,
+              "type": "number"
+            },
+            {
+              "id": "interesse_produto",
+              "name": "lead.interesseProduto",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "lead_status",
+              "name": "lead.leadStatus",
+              "value": "novo",
+              "type": "string"
+            },
+            {
+              "id": "frequencia_compra",
+              "name": "lead.frequenciaCompra",
+              "value": "primeira_compra",
+              "type": "string"
+            },
+            {
+              "id": "valor_potencial",
+              "name": "lead.valorPotencial",
+              "value": 0,
+              "type": "number"
+            },
+            {
+              "id": "data_ultima_interacao",
+              "name": "lead.dataUltimaInteracao",
+              "value": "={{ $now }}",
+              "type": "dateTime"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1985385-a9b9-4924-8567-3bf34ef948aa",
+      "name": "camposIniciais",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -6016,
+        496
+      ],
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "clientes_delivery",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "=telefone_cliente",
+              "keyValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            }
+          ]
+        }
+      },
+      "id": "ff75421e-a021-465d-8917-7cbe22a71697",
+      "name": "getClient",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4656,
+        496
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "id": "ad669a10-71d8-46e1-b1bc-03b8ac3697c1",
+      "name": "Calculadora",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        -2192,
+        576
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "7c12b18e-02ae-45ff-8c11-73752b93d8a6",
+      "name": "NOP1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -3984,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b3c9b986-29a6-4418-a033-6422c387377f",
+              "leftValue": "={{ $('Webhook').item.json.body.data.key.fromMe}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4aed66a1-0680-4b8f-bf68-d2b00a3a2120",
+      "name": "fromMe",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -4224,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 897,
+        "width": 1607,
+        "color": 6
+      },
+      "id": "6c61a375-873d-42c3-a49b-7e4c6aa302a4",
+      "name": "Sticky Note11",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2400,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "content": "#### O Cérebro (Agente AI)",
+        "height": 80,
+        "width": 202,
+        "color": 4
+      },
+      "id": "c1ea3a1b-9bb0-4f67-81c5-5a9e26f19d86",
+      "name": "Sticky Note18",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2368,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message_id }}",
+                    "rightValue": "={{ $('camposIniciais').item.json.content.idMensagem }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEquals"
+                    },
+                    "id": "a21ff8cf-512e-4d54-bf78-4b74bc5be23f"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "nada a fazer"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2b9b7794-e8f6-45b5-8021-f59dbb747cb0",
+                    "leftValue": "={{ DateTime.fromISO($json.timestamp) }}",
+                    "rightValue": "={{ $now.minus(Number($('camposIniciais').item.json.app.debouncerTime), 'seconds') }}",
+                    "operator": {
+                      "type": "dateTime",
+                      "operation": "before"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "proceder"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "esperar"
+        }
+      },
+      "id": "da5864cf-ae28-430d-b641-6b8e2aff794a",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -3392,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "=Consulte sempre que precisar de informações de pagamento, taxa de entrega, endereço e horário de funcionamento",
+        "operation": "get",
+        "documentURL": "1SEKGQFNMKnUYRWJ5k9pfS4uvH9wh9IP7rypFoW5hzb8"
+      },
+      "id": "1e7b3717-613f-4a3a-83b8-af9564ad43f5",
+      "name": "informacoes_bucaneiro",
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        -1840,
+        576
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "cTqC5Hf3LzfXqPmK",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evolution-evolution-api.m1x7ft.easypanel.host/message/sendText/chat_3afrios",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('camposIniciais').item.json.whatsapp.evo.apikey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $('Edit Fields').item.json.text }}"
+            },
+            {
+              "name": "linkPreview",
+              "value": "={{ $('camposIniciais').item.json.linkPreview }}"
+            },
+            {
+              "name": "delay",
+              "value": "={{ $('camposIniciais').item.json.Digitando }}"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "4a9e8576-f97a-4ca5-a86a-053a42dafcbc",
+      "name": "Responde texto1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        592,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2c845210-2c6b-4bf1-b975-00b9e82e80f1",
+              "name": "text",
+              "value": "={{ $('Processa Qualificação').item.json.output_agente.replace(/\\*\\*/g, '*') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a08cc088-2313-4a00-b73e-841ede44d04c",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        192,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "delivery",
+        "options": {}
+      },
+      "id": "dbe3cccf-d8ae-4535-9ac3-d7070a4e948a",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -6400,
+        496
+      ],
+      "webhookId": "a97b04c1-9d2e-49e7-9502-8ccf7301006f"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('messages').all()[0].json.messages }}",
+        "options": {
+          "systemMessage": "=# Visão Geral\nVocê é Ana, o Agente Orquestrador da 3A Frios. Analise a intenção do cliente e delegue tarefas aos agentes especializados para fornecer atendimento preciso e personalizado.\n\n## Agentes Especializados\n- **Agente de Catálogo**: Consulta produtos, preços e disponibilidade.\n- **Agente de Pedidos**: Registra e acompanha pedidos.\n- **Agente de Atendimento**: Gerencia comunicação geral e relacionamento.\n- **Agente de Qualificação**: Qualifica leads e identifica oportunidades.\n- **Agente de Marketing**: Personaliza e entrega campanhas promocionais **pré-aprovadas e segmentadas**. (⚠️ Só use se houver campanha ativa!)\n\n## Regras de Orquestração\n1.  **Identifique a intenção do cliente** antes de agir.\n2.  **Dúvidas sobre produtos**: Acione Agente de Catálogo.\n3.  **Solicitação de pedido**: Acione Agente de Pedidos.\n4.  **Interesse em grandes volumes**: Acione Agente de Qualificação.\n5.  **Comunicação geral ou saudações**: Use Agente de Atendimento.\n6.  **Envie o catálogo** apenas se o cliente solicitar explicitamente (\"catálogo\", \"produtos disponíveis\", etc.).\n7.  **ANTES DE RESPONDER, verifique se existe alguma campanha de marketing ativa** que se aplique a este cliente.\n    - Use a ferramenta \"ferramenta_consulta_campanhas\" para listar campanhas cuja data de início <= hoje <= data de fim.\n    - Para cada campanha, **analise o campo \"segmento\"** (ex: {\"lead_score\": \">5\", \"interesseProduto\": \"contains queijo\"}) e verifique se o cliente atual se encaixa.\n    - **SE e SOMENTE SE** houver uma campanha ativa E o cliente se encaixar no segmento, **ACIONE o Agente de Marketing**.\n    - **NUNCA** acione o Agente de Marketing se não houver campanha ativa ou se o cliente não se encaixar.\n\n## Ações Especiais\n- Enviar catálogo: Inclua \"enviar_catalogo\" na resposta.\n- Atualizar endereço: Inclua \"atualiza_endereco:{endereço}\" na resposta.\n- Qualificar leads: Retorne JSON: {\"lead_score\": X, \"lead_status\": \"status\", \"interesse_produto\": \"produto\"}.\n\n## Informações da 3A Frios\n- **Produtos**: Queijos (mussarela, prato, cheddar), frios (presunto, mortadela), laticínios.\n- **Entrega**: Grátis até 3km, R$3 (3-5km), R$5 (>5km).\n- **Horário**: Seg-Sex 8h-18h, Sáb 8h-12h.\n- **Pagamento**: Dinheiro, cartão, PIX, transferência.\n\n## Dados do Cliente\n- Nome: {{ $('camposIniciais').item.json.meta.nomeCliente || 'Cliente' }}\n- Telefone: {{ $('camposIniciais').item.json.meta.telefoneCliente }}\n- Novo cliente: {{ !$('getClient').item.json.telefoneCliente }}\n- Lead Score: {{ $('getClient').item.json.leadscore || 0 }}\n- Interesse Declarado: {{ $('getClient').item.json.interesseproduto || 'Nenhum' }}\n- Última Interação: {{ $('getClient').item.json.dataultimainteracao || 'Primeiro contato' }}\n\n## Mensagem Atual\n{{ $('messages').item.json.messages }}",
+          "maxIterations": 7,
+          "returnIntermediateSteps": true,
+          "passthroughBinaryImages": true
+        }
+      },
+      "id": "5b8e3140-273d-4069-9a0d-f7ddf0da7717",
+      "name": "Agente Atendimento Delivery",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        -1664,
+        256
+      ],
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('camposIniciais').item.json.whatsapp.evo.server_url }}/message/sendText/{{ $('camposIniciais').item.json.whatsapp.evo.nomeInstancia }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('camposIniciais').item.json.whatsapp.evo.apikey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('camposIniciais').item.json.telefoneCliente }}"
+            },
+            {
+              "name": "text",
+              "value": "=Não entendo imagens, digite ou envie um áudio por favor"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "358d0e24-afa3-40d4-97cb-b3797cc07136",
+      "name": "Resposta - Não leio imagem",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -5600,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "name": "catalogo_produtos",
+        "description": "use essa tool quando o usurário desejar fazer um pedido de algum item do catálogo"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        -1424,
+        400
+      ],
+      "id": "75dd3abe-d0ef-4a16-9cb1-9fafb04ba0f1",
+      "name": "Vector Store Tool"
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "documents_delivery",
+          "mode": "list",
+          "cachedResultName": "documents_delivery"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        -1136,
+        496
+      ],
+      "id": "5a46478c-7483-4c61-bd46-2411d21bf4e1",
+      "name": "Supabase Vector Store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1456,
+        608
+      ],
+      "id": "146abc7e-0e41-4969-9ef6-3dd91e8345ec",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "G09KOtL6AK7tLTtZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-3.5-turbo",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        -1280,
+        608
+      ],
+      "id": "4d3329ce-3c84-42a0-bf01-e38eba620e39",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "G09KOtL6AK7tLTtZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "79625d22-84b0-4d0d-b661-9a471719ff6a",
+              "name": "nomeCliente",
+              "value": "={{ $json.nomeCliente }}",
+              "type": "string"
+            },
+            {
+              "id": "b9c0ef22-5a16-45e7-a59c-ad2382d8caec",
+              "name": "telefoneCliente",
+              "value": "={{ $json.telefoneCliente }}",
+              "type": "string"
+            },
+            {
+              "id": "c206a094-e75b-4379-93a4-97868c277ee4",
+              "name": "enderecoCliente",
+              "value": "={{ $json.query }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -592,
+        544
+      ],
+      "id": "97e3b818-5401-4755-814e-69410013c7f5",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "clientes_delivery",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefone_cliente",
+              "condition": "eq",
+              "keyValue": "={{ $json.telefoneCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "enderecocliente",
+              "fieldValue": "={{ $json.enderecoCliente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        544
+      ],
+      "id": "aa6ed66d-44f3-4b7d-a7aa-bd5001063888",
+      "name": "Supabase2",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "73d6e94f-b073-4584-a1cc-0f7791e29664",
+              "name": "response",
+              "value": "ok",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        544
+      ],
+      "id": "f09c4f62-a135-4f1a-ae4d-6bbc3d6d2329",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "146doZYu9E1s9pOCPC_se8ZpzLU8e5K-m",
+          "mode": "list",
+          "cachedResultName": "RAG 3A Frios",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/146doZYu9E1s9pOCPC_se8ZpzLU8e5K-m"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "id": "b7411f8a-5edd-4acc-945b-5ff4a39f4ba4",
+      "name": "Google Drive Trigger",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -3552,
+        1056
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "B7ikTFobxCiKShg5",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields10').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "id": "48b5c17d-a0f5-4dd0-ab74-889b2f7e3c2a",
+      "name": "Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -3536,
+        1360
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "B7ikTFobxCiKShg5",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "id": "5de89e1f-5de3-4517-ad05-b1759378c9d4",
+      "name": "Extract from File",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -3088,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "5aecc7ca-7b60-4717-960c-436d69f148e6",
+      "name": "Embeddings OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        -2944,
+        1488
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "G09KOtL6AK7tLTtZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3508db32-56a3-4a35-bffe-17d2f99ff4d1",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        -2688,
+        1456
+      ]
+    },
+    {
+      "parameters": {
+        "chunkOverlap": 200,
+        "options": {}
+      },
+      "id": "cd5f506e-9ece-443b-8a18-b243f11686e4",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        -2800,
+        1552
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "documents_delivery",
+        "filterType": "string",
+        "filterString": "=metadata->>file_id=like.*{{ $json.id }}*"
+      },
+      "id": "df84bc69-3a91-4de1-960f-3b97817bd358",
+      "name": "Supabase14",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -2576,
+        1056
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1b9ce002-32a7-4f00-9eb5-e84c621bbd1e",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "834ce811-b230-43b9-9c2f-43b1669ead2d",
+      "name": "Edit Fields10",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3088,
+        1056
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents_delivery",
+          "mode": "list",
+          "cachedResultName": "documents_delivery"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "b36f4721-f741-46a0-b089-f3059cd771f1",
+      "name": "Supabase Vector Store1",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        -2736,
+        1296
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## RAG\n",
+        "height": 680,
+        "width": 1228
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -3648,
+        1008
+      ],
+      "id": "fa52e310-8deb-4a6a-b25e-948efc61f722",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "=$json.output",
+                    "rightValue": "=enviar_catalogo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "b7aa5071-bea6-49d4-932a-4588019a0d82"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "enviar_catalogo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "dbafbc71-cb01-4ed4-901c-8d1cee11b8d8",
+                    "leftValue": "=$json.output",
+                    "rightValue": "atualiza_endereco",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "atualiza_endereco"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0d548aa6-7ae9-4939-a2e2-c1c82c60a898",
+                    "leftValue": "=$json.output",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "resposta_normal"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -272,
+        240
+      ],
+      "id": "2c3a2ceb-e9bd-47ff-80b7-139c99b3c0de",
+      "name": "Switch de Ações"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('camposIniciais').item.json.whatsapp.evo.server_url }}/message/sendMedia/{{ $('camposIniciais').item.json.whatsapp.evo.nomeInstancia }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('camposIniciais').item.json.whatsapp.evo.apikey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "name": "mediaType",
+              "value": "document"
+            },
+            {
+              "name": "media",
+              "value": "https://drive.google.com/file/d/{{ $('camposIniciais').item.json.catalogo.id }}/view"
+            },
+            {
+              "name": "fileName",
+              "value": "catalogo_ba_frios.pdf"
+            },
+            {
+              "name": "caption",
+              "value": "\"Olá, {{ $('camposIniciais').item.json.meta.nomeCliente || 'Cliente' }}! 🧀 Bem-vindo à BA Frios! Aqui está nosso catálogo com os melhores queijos, frios e laticínios para você!\""
+            },
+            {
+              "name": "delay",
+              "value": "={{ $('camposIniciais').item.json.Digitando }}"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "87db3097-2c21-48a3-af47-ad41b8618159",
+      "name": "HTTP Request",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "lead_qualification",
+              "name": "leadData",
+              "value": "={{ (() => {\n  try {\n    // Extrair JSON de qualificação do output do agente\n    const output = $json.output;\n    const jsonMatch = output.match(/\\{[^\\{\\}]*\"lead_score\"[^\\{\\}]*\\}/);\n    \n    if (jsonMatch) {\n      return JSON.parse(jsonMatch[0]);\n    } else {\n      // Se não encontrar JSON, criar qualificação baseada em padrões\n      const leadScore = output.includes('pedido confirmado') ? 10 : \n                      output.includes('gostaria de saber') ? 3 : \n                      output.includes('valor') ? 7 : 5;\n                      \n      const leadStatus = leadScore >= 8 ? 'pronto_para_comprar' : \n                       leadScore >= 4 ? 'interessado' : 'novo';\n                       \n      return {\n        lead_score: leadScore,\n        lead_status: leadStatus,\n        interesse_produto: '',\n        frequencia_compra: 'primeira_compra',\n        valor_potencial: 0\n      };\n    }\n  } catch (error) {\n    return {\n      lead_score: 0,\n      lead_status: 'novo',\n      interesse_produto: '',\n      frequencia_compra: 'primeira_compra',\n      valor_potencial: 0\n    };\n  }\n})() }}",
+              "type": "object"
+            },
+            {
+              "id": "2b916d25-1190-4d6c-ad10-8b634c15b55b",
+              "name": "output_agente",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -640,
+        256
+      ],
+      "id": "87230f13-78fd-46ef-ab85-316bcde0e398",
+      "name": "Processa Qualificação"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "clientes_delivery",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefone_cliente",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "leadscore",
+              "fieldValue": "={{ $('Processa Qualificação').item.json.leadData.lead_score }}"
+            },
+            {
+              "fieldId": "leadstatus",
+              "fieldValue": "={{ $('Processa Qualificação').item.json.leadData.lead_status }}"
+            },
+            {
+              "fieldId": "interesseproduto",
+              "fieldValue": "={{ $('Processa Qualificação').item.json.leadData.interesse_produto }}"
+            },
+            {
+              "fieldId": "frequenciacompra",
+              "fieldValue": "={{ $('Processa Qualificação').item.json.leadData.frequencia_compra }}"
+            },
+            {
+              "fieldId": "valorpotencial",
+              "fieldValue": "={{ $('Processa Qualificação').item.json.leadData.valor_potencial }}"
+            },
+            {
+              "fieldId": "dataultimainteracao",
+              "fieldValue": "={{ $now }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        256
+      ],
+      "id": "0cbd84fb-7958-4c69-b5fd-d44ece7ceb2f",
+      "name": "Atualiza Qualificação",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "temp_messages",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telefone_cliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('camposIniciais').item.json.content.tipoMensagem }}"
+            },
+            {
+              "fieldId": "message_id",
+              "fieldValue": "={{ $('camposIniciais').item.json.content.idMensagem }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -3984,
+        496
+      ],
+      "id": "8613333f-b60d-46c0-b627-18a2fb02e9c0",
+      "name": "empilharTexto",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "tableId": "temp_messages",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telefone_cliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ JSON.stringify({ message: $('camposIniciais').item.json.content.mensagem || '', message_id: $('camposIniciais').item.json.content.idMensagem, timestamp: $now }) }}"
+            },
+            {
+              "fieldId": "message_id",
+              "fieldValue": "={{ $('camposIniciais').item.json.content.idMensagem }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4832,
+        720
+      ],
+      "id": "caf63091-86c1-4962-a97c-bc63c0733d50",
+      "name": "empilharAudio",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "temp_messages",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefone_cliente",
+              "keyValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -3568,
+        496
+      ],
+      "id": "61067cff-b271-48d7-9813-4cc408b0a4fd",
+      "name": "Obtem1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "temp_messages",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefone_cliente",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -3168,
+        496
+      ],
+      "id": "c2f1bbcc-ee12-4343-919b-d41b263bf5d4",
+      "name": "Deleta1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('getClient').item.json.sessionid || $('camposIniciais').item.json.meta.telefoneCliente }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -2016,
+        576
+      ],
+      "id": "484e9251-d70f-45bb-b7bc-bc73e95c6cb4",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Você é um especialista em produtos da BA Frios",
+        "text": "={{ $('messages').item.json.messages }}",
+        "options": {
+          "systemMessage": "# Especialista em Produtos 3A Frios\nVocê é o Agente de Catálogo da 3A Frios, especialista em produtos, preços e disponibilidade.\n## Seu Papel\n- Consultar a base de produtos para informações atualizadas\n- Fornecer preços precisos usando a ferramenta de catálogo\n- Sugerir produtos complementares e combos\n- Orientar sobre quantidades ideais\n- Explicar características dos produtos\n## Diretrizes de Atendimento\n1. **SEMPRE use a ferramenta \"catalogo_produtos\"** para buscar preços e informações\n2. **Não invente preços** - sempre consulte a base de dados\n3. **Sugira quantidades práticas**: 500g para casais, 1kg para famílias\n4. **Recomende produtos complementares** baseado no pedido\n5. **Ofereça combos** quando apropriado para economia\n6. **Confirme disponibilidade** dos produtos consultados\n7. **Seja específico** sobre pesos e preços consultados\n## Processo de Atendimento\n1. Identifique os produtos mencionados pelo cliente\n2. Use a ferramenta para consultar preços atualizados\n3. Apresente as informações de forma clara\n4. Sugira produtos complementares ou combos\n5. Calcule totais quando necessário\n## Informações do Cliente\n- **Nome**: {{ $('camposIniciais').item.json.meta.nomeCliente }}\n- **Telefone**: {{ $('camposIniciais').item.json.meta.telefoneCliente }}\n- **Novo Cliente**: {{ !$('getClient').item.json.telefoneCliente ? 'Sim' : 'Não' }}\n## Exemplo de Uso\nCliente: \"Quanto custa a mussarela?\"\n1. Use a ferramenta catalogo_produtos com query \"mussarela preço\"\n2. Responda com preço encontrado\n3. Sugira quantidade adequada\n4. Ofereça produtos complementares\nIMPORTANTE: Sempre consulte a base antes de informar qualquer preço!"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        -2336,
+        752
+      ],
+      "id": "63317f1f-8c30-43ea-8b9e-6cdb18cb1e61",
+      "name": "agente_catalogo"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        -2256,
+        912
+      ],
+      "id": "0d066c18-bcd2-4a8e-b24d-86384bc26977",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -2352,
+        960
+      ],
+      "id": "93f47212-ec83-4ce9-a8de-72621a37afd0",
+      "name": "OpenAI Chat Model2 Catálogo",
+      "credentials": {
+        "openAiApi": {
+          "id": "G09KOtL6AK7tLTtZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Use esta ferramenta para buscar informações de produtos",
+        "method": "POST",
+        "url": "={{ $('camposIniciais').item.json.whatsapp.evo.server_url }}/message/sendText/{{ $('camposIniciais').item.json.whatsapp.evo.nomeInstancia }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=={\"telefone\": $(\"camposIniciais\").item.json.meta.telefoneCliente}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -2160,
+        976
+      ],
+      "id": "e018c5e2-3440-4a14-98ae-6f164182a224",
+      "name": "ferramenta_produtos"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Você é um especialista em pedidos da 3A Frios",
+        "text": "={{ $('camposIniciais').item.json.content.mensagem }}",
+        "options": {
+          "systemMessage": "# Visão Geral\nVocê é o Agente de Pedidos da 3A Frios. Especialista em registrar e confirmar pedidos.\n\n**Ferramentas Disponíveis**\n- Use **\"Ferramenta de Pedidos\"** para registrar novos pedidos\n- Use **\"Calculator\"** para calcular valores totais, descontos ou frete\n\n**INSTRUÇÕES:**\n1. Identifique itens e quantidades solicitadas\n2. Calcule o valor total do pedido usando a calculadora\n3. Verifique se todas as informações necessárias foram fornecidas\n4. Colete informações faltantes (endereço, forma de pagamento)\n5. Confirme todos os detalhes do pedido\n6. Forneça prazo de entrega\n7. Informe formas de pagamento disponíveis\n\n**FORMAS DE PAGAMENTO:**\n- Dinheiro na entrega\n- Cartão de crédito na entrega\n- PIX\n- Transferência bancária\n\n**TAXA DE ENTREGA:**\n- Até 3km: Grátis\n- 3km a 5km: R$ 3,00\n- Acima de 5km: R$ 5,00\n\n**INFORMAÇÕES DO CLIENTE:**\n- Nome: {{ $('camposIniciais').item.json.meta.nomeCliente }}\n- Telefone: {{ $('camposIniciais').item.json.meta.telefoneCliente }}\n- Endereço: {{ $('getClient').item.json.enderecoCliente || 'Não informado - solicitar' }}\n\n**HORÁRIO DE FUNCIONAMENTO:**\n- Segunda a Sexta: 8h às 18h\n- Sábado: 8h às 12h\n- Domingo: Fechado"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        -2000,
+        752
+      ],
+      "id": "4522a2e2-ba36-4a90-a807-8f61f11c8752",
+      "name": "agente_pedidos"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -2016,
+        960
+      ],
+      "id": "8f372abc-12cb-4b8f-9786-832d9f8817d4",
+      "name": "OpenAI Chat Model2 Pedidos",
+      "credentials": {
+        "openAiApi": {
+          "id": "G09KOtL6AK7tLTtZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        -1904,
+        928
+      ],
+      "id": "53092213-1bb0-461a-ad7a-872ee5bba8cd",
+      "name": "Calculator1"
+    },
+    {
+      "parameters": {
+        "tableId": "pedidos_delivery",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telefone_cliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "fieldId": "nome_cliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.nomeCliente"
+            },
+            {
+              "fieldId": "itens_pedido",
+              "fieldValue": "{query}"
+            },
+            {
+              "fieldId": "valor_total",
+              "fieldValue": "={{ Number($('camposIniciais').item.json.meta.valor ?? 0) }}"
+            },
+            {
+              "fieldId": "endereco_entrega",
+              "fieldValue": "={{ $('getClient').item.json.enderecocliente ?? 'Endereço não informado' }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "pendente"
+            },
+            {
+              "fieldId": "data_pedido",
+              "fieldValue": "={{ $now }}"
+            },
+            {
+              "fieldId": "forma_pagamento",
+              "fieldValue": "{pagamento}"
+            },
+            {
+              "fieldId": "taxa_entrega",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.taxa ?? 0 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        -1792,
+        960
+      ],
+      "id": "de6973b5-442b-4245-a003-0f684c38a0e0",
+      "name": "ferramenta_pedidos",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Você é um especialista em atendimento da BA Frios",
+        "text": "={{ $('camposIniciais').item.json.content.mensagem }}",
+        "options": {
+          "systemMessage": "=# Visão Geral\nVocê é o Agente de Atendimento da 3A Frios. Especialista em comunicação e relacionamento com clientes.\n\n**INSTRUÇÕES:**\n1. Seja cordial e profissional\n2. Apresente-se como Ana, assistente da 3A Frios\n3. Integre as informações dos outros agentes quando necessário\n4. Adapte o tom de acordo com o perfil do cliente\n5. Se for primeira conversa, envie saudação especial\n6. Finalize com uma pergunta para engajar o cliente\n7. Gerencie reclamações e elogios de forma adequada\n\n**HORÁRIO DE FUNCIONAMENTO:**\n- Segunda a Sexta: 8h às 18h\n- Sábado: 8h às 12h\n- Domingo: Fechado\n\n**FORMAS DE CONTATO:**\n- WhatsApp: (XX) XXXXX-XXXX\n- Telefone: (XX) XXXX-XXXX\n- E-mail: contato@3afrios.com.br\n\n**HISTÓRICO DA CONVERSA:**\n{{ $('messages').item.json.messages }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        -1680,
+        752
+      ],
+      "id": "d596a03b-c54f-4632-bdf3-b32a0d5694e2",
+      "name": "agente_atendimento"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Você é um especialista em qualificação de leads da 3A Frios",
+        "text": "={{ $('camposIniciais').item.json.content.mensagem }}",
+        "options": {
+          "systemMessage": "=# Visão Geral\nVocê é o Agente de Qualificação de Leads da 3A Frios. Especialista em identificar e qualificar potenciais clientes.\n**Ferramentas Disponíveis**\n- Use **\"Ferramenta Atualiza Lead\"** para registrar a qualificação do lead no banco de dados.\n**INSTRUÇÕES:**\n1. Analise o perfil e o interesse do cliente.\n2. Identifique sinais de intenção de compra.\n3. Classifique o lead de acordo com o potencial de negócio.\n4. **USE A FERRAMENTA \"Ferramenta Atualiza Lead\"** para salvar os dados de qualificação.\n5. Retorne uma mensagem de confirmação após usar a ferramenta.\n**CRITÉRIOS DE QUALIFICAÇÃO:**\n**Lead Quente (prioridade alta):**\n- Cliente pergunta sobre produtos específicos com preços\n- Cliente solicita orçamento para grandes quantidades\n- Cliente menciona compra recorrente ou para revenda\n- Cliente solicita atendimento personalizado\n- Cliente menciona prazo curto para entrega\n**Lead Morno (prioridade média):**\n- Cliente pergunta sobre variedade de produtos\n- Cliente solicita catálogo completo\n- Cliente pergunta sobre prazos de entrega\n- Cliente demonstra interesse mas sem intenção imediata de compra\n**Lead Frio (prioridade baixa):**\n- Cliente apenas cumprimenta ou faz perguntas genéricas\n- Cliente pergunta sobre horário de funcionamento\n- Cliente solicita informações básicas já disponíveis no catálogo\n**HISTÓRICO DA CONVERSA:**\n{{ $('Processar Histórico').item.json.historicoFormatado }}\n**DADOS DO CLIENTE:**\nNome: {{ $('camposIniciais').item.json.meta.nomeCliente }}\nTelefone: {{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        -1376,
+        752
+      ],
+      "id": "9f1ee0b6-0203-4241-a3b8-3f36ce8b8086",
+      "name": "agente_qualificacao"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1376,
+        960
+      ],
+      "id": "23030546-5ca4-41df-89df-9be13d0325d5",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "G09KOtL6AK7tLTtZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use esta ferramenta para atualizar a qualificação do lead no banco de dados",
+        "operation": "update",
+        "tableId": "clientes_delivery",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefonecliente",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "leadscore",
+              "fieldValue": "{lead_score}"
+            },
+            {
+              "fieldId": "leadstatus",
+              "fieldValue": "{lead_status}"
+            },
+            {
+              "fieldId": "interesseproduto",
+              "fieldValue": "{interesse_produto}"
+            },
+            {
+              "fieldId": "frequenciacompra",
+              "fieldValue": "{frequencia_compra}"
+            },
+            {
+              "fieldId": "valorpotencial",
+              "fieldValue": "{valor_potencial}"
+            },
+            {
+              "fieldId": "dataultimainteracao",
+              "fieldValue": "={{ $now }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        -1248,
+        976
+      ],
+      "id": "6450aeee-3ac7-4809-b4bf-d12af08bf688",
+      "name": "ferramenta_atualiza_leads",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Recebe o input do nó messages\nconst input = $input.all();\n\n// Processa cada item do input\nreturn input.map(item => {\n  let formattedMessage = '';\n  \n  // Verifica se messages existe e é uma string\n  if (item.json.messages && typeof item.json.messages === 'string') {\n    formattedMessage = item.json.messages.trim();\n  } else {\n    formattedMessage = '';\n  }\n\n  // Retorna o objeto no formato esperado\n  return {\n    json: {\n      messages: formattedMessage,\n      sessionid: item.json.sessionid || ''\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2816,
+        496
+      ],
+      "id": "4dc0b109-21ad-4d13-8cd2-2d527e28c2ea",
+      "name": "FormatarMessages"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('getClient').item.json.telefone_cliente }}",
+                    "rightValue": "cliente_existe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    },
+                    "id": "0a29e8c5-51b3-480c-82b0-565f7fc1c685"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Cliente Existe"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "dd0fc4b3-f0af-437f-9932-625771e15736",
+                    "leftValue": "={{ $('getClient').item.json.telefone_cliente }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "string",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Cliente Não Existe"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -4464,
+        496
+      ],
+      "id": "f6444db6-af35-497f-a028-4a19b7deb889",
+      "name": "Verificar Cliente"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1632,
+        944
+      ],
+      "id": "c6e102c0-d972-4f5d-b43b-afaf57764726",
+      "name": "OpenAI Chat Model2 Atendimento",
+      "credentials": {
+        "openAiApi": {
+          "id": "G09KOtL6AK7tLTtZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('camposIniciais').item.json.content.tipoMensagem }}",
+                    "rightValue": "imageMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "d72c4252-51e3-4a29-a893-e694d514c28e"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Imagem"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0997b5db-ec74-4f08-ac76-45f40801f7a0",
+                    "leftValue": "={{ $('camposIniciais').item.json.content.tipoMensagem }}",
+                    "rightValue": "conversation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Texto"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ac9ae237-29bd-47c6-88a6-12b8b5783f0c",
+                    "leftValue": "={{ $('camposIniciais').item.json.content.tipoMensagem }}",
+                    "rightValue": "audioMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -5840,
+        480
+      ],
+      "id": "1ab98877-8d22-4a42-b3d6-a702df0790df",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('camposIniciais').item.json.whatsapp.evo.server_url }}/message/getBase64FromMediaMessage/{{ $('camposIniciais').item.json.whatsapp.evo.nomeInstancia }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "=={{ $('camposIniciais').item.json.whatsapp.evo.apikey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n       \"key\": {\n         \"remoteJid\": \"{{ $('camposIniciais').item.json.meta.telefoneCliente }}\",\n         \"fromMe\": false,\n         \"id\": \"{{ $('camposIniciais').item.json.content.idMensagem }}\"\n       }\n     }",
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -5600,
+        720
+      ],
+      "id": "3e3f5ffa-1b5f-4ab9-b065-e1aa874873f6",
+      "name": "Get-audio",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data.base64",
+        "options": {
+          "fileName": "audio.mp3"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -5424,
+        720
+      ],
+      "id": "e866dbdc-a46d-442c-999c-0114a8bb9fa7",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -5232,
+        720
+      ],
+      "id": "5fe74c02-f516-46d8-8b43-b9fb4ef3f170",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "openAiApi": {
+          "id": "G09KOtL6AK7tLTtZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Você é um especialista em promoções, descontos e campanhas de marketing da 3A Frios.",
+        "text": "={{ $('camposIniciais').item.json.content.mensagem }}",
+        "options": {
+          "systemMessage": "# Visão Geral\nVocê é o Agente de Marketing da 3A Frios. Sua função é personalizar e entregar campanhas de marketing pré-definidas pela loja. Você NÃO cria promoções nem inventa preços; você apenas as adapta ao cliente com base nos dados fornecidos e nas ferramentas disponíveis.\n\n## INSTRUÇÕES PRINCIPAIS\n1.  VOCÊ SÓ DEVE AGIR SE RECEBER DADOS DE UMA CAMPANHA ATIVA. Se não receber, responda de forma neutra e passe a bola para o Agente de Atendimento.\n2.  **NUNCA INVENTE PREÇOS OU CONDIÇÕES.** SEMPRE use as ferramentas disponíveis para obter informações atualizadas.\n3.  Use os dados do cliente para personalizar a mensagem da campanha.\n4.  Destaque o benefício e crie urgência (se aplicável).\n\n## FERRAMENTAS DISPONÍVEIS (USE SEMPRE QUE NECESSÁRIO)\n- **`catalogo_produtos`**: Consulte esta ferramenta para obter preços, descrições e disponibilidade ATUAIS dos produtos mencionados na campanha.\n- **`informacoes_bucaneiro`**: Consulte para obter informações sobre frete, pagamento e horário de funcionamento.\n\n## DADOS DA CAMPANHA (FORNECIDOS PELO ORQUESTRADOR)\n- **Nome da Campanha**: {{ $json.campanha.nome }}\n- **Produtos Envolvidos**: {{ $json.campanha.produtos.join(', ') }}\n- **Oferta/Desconto**: {{ $json.campanha.oferta }}\n- **Validade**: Até {{ $json.campanha.data_fim }}\n\n## DADOS DO CLIENTE\n- **Nome**: {{ $json.cliente.nomeCliente }}\n- **Status**: {{ $json.cliente.leadStatus }}\n- **Interesse Declarado**: {{ $json.cliente.interesseProduto || 'Nenhum' }}\n\n## EXEMPLO DE FLUXO CORRETO\nCliente: \"Oi, tô precisando de uns frios.\"\n1.  Você recebe: campanha = { nome: \"Fim de Semana Gourmet\", produtos: [\"Mussarela\", \"Presunto\"], oferta: \"Leve 3, pague 2\" }.\n2.  **USE A FERRAMENTA `catalogo_produtos`** para consultar o preço atual da Mussarela e do Presunto.\n3.  Calcule o valor da oferta com base nos preços reais.\n4.  Responda: \"Olá, {{ nome }}! 🎉 Para seu fim de semana perfeito, temos uma oferta imperdível: **Leve 3, pague 2** em Mussarela e Presunto! *(Preço normal: R$X/kg, na oferta: R$Y/kg)*. Aproveite até {{ data_fim }}!\"\n\n## EXEMPLO DE FLUXO ERRADO (NUNCA FAÇA ISSO)\n❌ \"Olá, {{ nome }}! Leve 3, pague 2 em Mussarela (R$25,90/kg) e Presunto (R$22,50/kg)!\"\n*(Porque os preços podem ter mudado, e você não consultou a ferramenta.)*"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        -1088,
+        752
+      ],
+      "id": "d996ada5-e040-4162-81e9-e960bc3ee52b",
+      "name": "agente_marketing"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1088,
+        960
+      ],
+      "id": "ce2a6370-6580-462f-9cdf-4eb8075677dc",
+      "name": "OpenAI Chat Model2 Marketing",
+      "credentials": {
+        "openAiApi": {
+          "id": "G09KOtL6AK7tLTtZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "campanhas_marketing",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "data_inicio",
+              "keyValue": "={{ $now.format('YYYY-MM-DD') }}"
+            },
+            {
+              "keyName": "data_fim",
+              "keyValue": "={{ $now.format('YYYY-MM-DD') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        960
+      ],
+      "id": "2ed91b1f-e2ea-4d77-b63e-76205014831f",
+      "name": "ferramenta_consulta_campanhas",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -1504,
+        976
+      ],
+      "id": "2cb73c7d-a06f-437b-bfb2-e0830a6d5cce",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Valida estrutura do webhook\nconst input = $input.all()[0];\n\ntry {\n  const body = input.json.body?.body;\n  \n  // Validações obrigatórias\n  if (!body?.data?.key?.id) {\n    throw new Error('ID da mensagem não encontrado');\n  }\n  \n  if (!body?.data?.key?.remoteJid) {\n    throw new Error('Telefone do cliente não encontrado');\n  }\n  \n  if (!body?.instance) {\n    throw new Error('Instância não encontrada');\n  }\n  \n  if (!body?.apikey) {\n    throw new Error('API Key não encontrada');\n  }\n  \n  // Garante campos obrigatórios\n  const validatedData = {\n    ...input.json,\n    body: {\n      ...input.json.body,\n      body: {\n        ...body,\n        data: {\n          ...body.data,\n          pushName: body.data.pushName || 'Cliente',\n          message: {\n            conversation: body.data.message?.conversation || body.data.message?.audioMessage?.text || ''\n          }\n        }\n      }\n    }\n  };\n  \n  return [{ json: validatedData }];\n  \n} catch (error) {\n  // Log do erro e retorna estrutura mínima para não quebrar\n  console.error('Payload inválido:', error.message);\n  \n  return [{\n    json: {\n      ...input.json,\n      error: true,\n      errorMessage: error.message\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -6208,
+        496
+      ],
+      "id": "33deb29d-a732-4380-a56b-11d0c0a25bdc",
+      "name": "Validar Payload"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "/dashboard",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -6016,
+        1168
+      ],
+      "id": "7e3e475a-6aca-4947-a88f-0d5d18157efe",
+      "name": "Webhook1",
+      "webhookId": "31588dbe-ac07-4ec6-8624-08eeab101bc0"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "=={{ $('Webhook1').item.json.body.acao === 'enviar-mensagem' }}",
+                    "rightValue": "envio_manual",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "9eb8ccdd-262e-4db3-9c48-1cdca5ffc5f3"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "envio_manual"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "67502793-8137-493c-b0d3-502001d93d57",
+                    "leftValue": "=={{ $('Webhook1').item.json.body.acao === 'reprocessar' }}",
+                    "rightValue": "reprocessar",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "reprocessar"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7b6be847-831b-4304-be34-9d0c0ff15184",
+                    "leftValue": "=={{ $('Webhook1').item.json.body.acao === 'atualizar-lead' }}",
+                    "rightValue": "atualizar_lead",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "atualizar_lead"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        -5312,
+        1152
+      ],
+      "id": "7bd312c9-75ba-4492-9288-982ef48e8201",
+      "name": "Switch3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Webhook1').item.json.body.whatsapp.evo.server_url }}/message/sendText/{{ $('Webhook1').item.json.body.whatsapp.evo.nomeInstancia }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "=={{ $('Webhook1').item.json.body.whatsapp.evo.apikey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"number\": \"={{ $('Webhook1').item.json.body.telefone }}\",\n  \"text\": \"={{ $('Webhook1').item.json.body.mensagem }}\",\n  \"delay\": 1800\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4992,
+        960
+      ],
+      "id": "bafe79c7-117d-4e9a-90f1-9dd9d8d60678",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fff1750c-c676-47c3-b3a6-83978a49716b",
+              "name": "telefoneCliente",
+              "value": "={{ $('Webhook1').item.json.body.telefoneCliente }}",
+              "type": "string"
+            },
+            {
+              "id": "e5695165-43b9-44f7-a7cb-ffe6163ddee9",
+              "name": "meta.telefoneCliente",
+              "value": "=={{ $('Webhook1').item.json.body.telefoneCliente }}",
+              "type": "string"
+            },
+            {
+              "id": "9e819a7b-02a6-49ca-9122-f930a29d169d",
+              "name": "content.mensagem",
+              "value": "=={{ $('Webhook1').item.json.body.mensagem }}",
+              "type": "string"
+            },
+            {
+              "id": "6494fe9f-2c39-4bd1-a517-eeabab357845",
+              "name": "meta.nomeCliente",
+              "value": "=={{ $('Webhook1').item.json.body.nomeCliente || 'Cliente' }}",
+              "type": "string"
+            },
+            {
+              "id": "2d72f2ae-34c1-44f6-8fc2-a915afe949fa",
+              "name": "whatsapp.evo.apikey",
+              "value": "=={{ $('Webhook1').item.json.body.whatsapp.evo.apikey }}",
+              "type": "string"
+            },
+            {
+              "id": "863c21d0-d541-4e85-9283-d2b11d130045",
+              "name": "whatsapp.evo.nomeInstancia",
+              "value": "=={{ $('Webhook1').item.json.body.whatsapp.evo.nomeInstancia }}",
+              "type": "string"
+            },
+            {
+              "id": "e53ed02d-905d-4eb8-8db9-92e6b945cc29",
+              "name": "whatsapp.evo.server_url",
+              "value": "=={{ $('Webhook1').item.json.body.whatsapp.evo.server_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -4992,
+        1168
+      ],
+      "id": "d05c3145-82d0-462d-ac3a-2170d8b82dd1",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4b3f3a16-b8e2-4611-bfe8-bdf2d6c0c324",
+              "name": "telefoneCliente",
+              "value": "={{ $('Webhook1').item.json.body.telefoneCliente }}",
+              "type": "string"
+            },
+            {
+              "id": "93bbcf88-2d22-4c09-b6df-a08d5cf6ad9e",
+              "name": "leadData",
+              "value": "={{ $('Webhook1').item.json.body }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -4992,
+        1392
+      ],
+      "id": "1343e8a8-286c-4dc6-b9e5-dad05276e1da",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telefone_cliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "fieldId": "texto",
+              "fieldValue": "={{ $('camposIniciais').item.json.content.mensagem || 'Mensagem vazia' }}"
+            },
+            {
+              "fieldId": "tipo",
+              "fieldValue": "recebida"
+            },
+            {
+              "fieldId": "origem",
+              "fieldValue": "cliente"
+            },
+            {
+              "fieldId": "id_mensagem_whatsapp",
+              "fieldValue": "={{ $('camposIniciais').item.json.content.idMensagem }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -3776,
+        496
+      ],
+      "id": "a3fb3ade-9685-41d6-b3c4-4612fefc55af",
+      "name": "Grava Msg Cliente",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telefone_cliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "fieldId": "texto",
+              "fieldValue": "={{ $json.text }}"
+            },
+            {
+              "fieldId": "tipo",
+              "fieldValue": "recebida"
+            },
+            {
+              "fieldId": "origem",
+              "fieldValue": "cliente"
+            },
+            {
+              "fieldId": "id_mensagem_whatsapp",
+              "fieldValue": "={{ $('camposIniciais').item.json.content.idMensagem }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -5024,
+        720
+      ],
+      "id": "a16ea039-360b-49ad-92ce-032aad36f52f",
+      "name": "Grava Msg Audio",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "clientes_delivery",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nomecliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.nomeCliente }}"
+            },
+            {
+              "fieldId": "telefone_cliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "fieldId": "idmensagem",
+              "fieldValue": "={{ $('camposIniciais').item.json.content.idMensagem }}"
+            },
+            {
+              "fieldId": "sessionid",
+              "fieldValue": "={{ $now.format('YYYYMMDDHHmmss') + '-' + $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "fieldId": "leadscore",
+              "fieldValue": "0"
+            },
+            {
+              "fieldId": "leadstatus",
+              "fieldValue": "novo"
+            },
+            {
+              "fieldId": "interesseproduto"
+            },
+            {
+              "fieldId": "frequenciacompra",
+              "fieldValue": "primeira_compra"
+            },
+            {
+              "fieldId": "valorpotencial",
+              "fieldValue": "0"
+            },
+            {
+              "fieldId": "dataultimainteracao",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "ai_ativo",
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4224,
+        768
+      ],
+      "id": "8de92835-53e2-44fb-9f87-d8818bfeb7fa",
+      "name": "Criar Cliente",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telefone_cliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "fieldId": "texto",
+              "fieldValue": "={{ $json.text ?? 'mensagem não disponível' }}"
+            },
+            {
+              "fieldId": "tipo",
+              "fieldValue": "enviada"
+            },
+            {
+              "fieldId": "origem",
+              "fieldValue": "ai"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        400,
+        288
+      ],
+      "id": "de20408e-622f-4aed-9b90-3e3553e107b0",
+      "name": "Grava Msg IA",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telefone_cliente",
+              "fieldValue": "={{ $('Webhook1').item.json.body.telefone }}"
+            },
+            {
+              "fieldId": "texto",
+              "fieldValue": "={{ $('Webhook1').item.json.body.mensagem }}"
+            },
+            {
+              "fieldId": "tipo",
+              "fieldValue": "enviada"
+            },
+            {
+              "fieldId": "origem",
+              "fieldValue": "humano"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4720,
+        960
+      ],
+      "id": "44963f09-79f7-4bc2-9b30-54c43cc5a7ac",
+      "name": "Grava Msg Humano",
+      "credentials": {
+        "supabaseApi": {
+          "id": "41BIrcwJRT6a9lxb",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fadf27aa-3a50-43a8-9b1c-a57b96255de5",
+              "leftValue": "={{ Boolean($('getClient').item.json?.ai_ativo) === true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2608,
+        352
+      ],
+      "id": "d38f09be-7064-4504-a8c8-3afdc8f2f984",
+      "name": "Verificar IA Ativa"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -2608,
+        704
+      ],
+      "id": "bdea1624-96b3-42bf-93b6-a408918fe530",
+      "name": "NoOp"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "tides.app.n8n.cloud",
+            "user-agent": "axios/1.10.0",
+            "content-length": "998",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, br",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "72.60.152.22",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "BR",
+            "cf-ray": "98c9128a63a0f1ee-GRU",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "x-forwarded-for": "72.60.152.22, 172.69.138.94",
+            "x-forwarded-host": "tides.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-52-6c4f4684d5-sbjk8",
+            "x-is-trusted": "yes",
+            "x-real-ip": "72.60.152.22"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "chat_3afrios",
+            "data": {
+              "key": {
+                "remoteJid": "558894150021@s.whatsapp.net",
+                "fromMe": false,
+                "id": "3EB0ED0A1026A96B3F3E07",
+                "senderLid": "246518774763762@lid"
+              },
+              "pushName": "Aristides Lima",
+              "status": "DELIVERY_ACK",
+              "message": {
+                "conversation": "Tem salame?",
+                "messageContextInfo": {
+                  "deviceListMetadata": {
+                    "senderKeyHash": "GNZzXKDgli0Rqw==",
+                    "senderTimestamp": "1760038194",
+                    "senderAccountType": "E2EE",
+                    "receiverAccountType": "E2EE",
+                    "recipientKeyHash": "8/cc7Zf+dCvTrQ==",
+                    "recipientTimestamp": "1760058770"
+                  },
+                  "deviceListMetadataVersion": 2,
+                  "messageSecret": "AudQfsIo24zBlBZjSnP/rMccupGVTE5D3dJqY1cQsgI="
+                }
+              },
+              "messageType": "conversation",
+              "messageTimestamp": 1760130289,
+              "instanceId": "35876921-33fc-4197-8467-92f3b3c1787e",
+              "source": "web"
+            },
+            "destination": "https://tides.app.n8n.cloud/webhook/delivery",
+            "date_time": "2025-10-10T18:04:50.118Z",
+            "sender": "558882165395@s.whatsapp.net",
+            "server_url": "https://evolution-evolution-api.m1x7ft.easypanel.host",
+            "apikey": "2460CEEFFDD6-4400-8266-8331DE580178"
+          },
+          "webhookUrl": "https://tides.app.n8n.cloud/webhook/delivery",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Obtem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "messages": {
+      "main": [
+        [
+          {
+            "node": "FormatarMessages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "camposIniciais": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getClient": {
+      "main": [
+        [
+          {
+            "node": "Verificar Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculadora": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fromMe": {
+      "main": [
+        [
+          {
+            "node": "NOP1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "empilharTexto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "NoOp.",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Deleta1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "informacoes_bucaneiro": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Grava Msg IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validar Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente Atendimento Delivery": {
+      "main": [
+        [
+          {
+            "node": "Processa Qualificação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Supabase2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase14": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields10": {
+      "main": [
+        [
+          {
+            "node": "Supabase14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch de Ações": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processa Qualificação": {
+      "main": [
+        [
+          {
+            "node": "Atualiza Qualificação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza Qualificação": {
+      "main": [
+        [
+          {
+            "node": "Switch de Ações",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "empilharAudio": {
+      "main": [
+        [
+          {
+            "node": "getClient",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "empilharTexto": {
+      "main": [
+        [
+          {
+            "node": "Grava Msg Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtem1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deleta1": {
+      "main": [
+        [
+          {
+            "node": "messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agente_catalogo": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "agente_catalogo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2 Catálogo": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agente_catalogo",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ferramenta_produtos": {
+      "ai_tool": [
+        [
+          {
+            "node": "agente_catalogo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agente_pedidos": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2 Pedidos": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agente_pedidos",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator1": {
+      "ai_tool": [
+        [
+          {
+            "node": "agente_pedidos",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ferramenta_pedidos": {
+      "ai_tool": [
+        [
+          {
+            "node": "agente_pedidos",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agente_atendimento": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agente_qualificacao": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agente_qualificacao",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ferramenta_atualiza_leads": {
+      "ai_tool": [
+        [
+          {
+            "node": "agente_qualificacao",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FormatarMessages": {
+      "main": [
+        [
+          {
+            "node": "Verificar IA Ativa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar Cliente": {
+      "main": [
+        [
+          {
+            "node": "fromMe",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Criar Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2 Atendimento": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agente_atendimento",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Resposta - Não leio imagem",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "getClient",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get-audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get-audio": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "Grava Msg Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agente_marketing": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2 Marketing": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agente_marketing",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ferramenta_consulta_campanhas": {
+      "ai_tool": [
+        [
+          {
+            "node": "agente_marketing",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "agente_atendimento",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar Payload": {
+      "main": [
+        [
+          {
+            "node": "camposIniciais",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Validar Payload",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Grava Msg Humano",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "getClient",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Atualiza Qualificação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Grava Msg Cliente": {
+      "main": [
+        [
+          {
+            "node": "Obtem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Grava Msg Audio": {
+      "main": [
+        [
+          {
+            "node": "empilharAudio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Cliente": {
+      "main": [
+        [
+          {
+            "node": "empilharTexto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Grava Msg IA": {
+      "main": [
+        [
+          {
+            "node": "Responde texto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar IA Ativa": {
+      "main": [
+        [
+          {
+            "node": "Agente Atendimento Delivery",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "NoOp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "bb9f124b-90f7-4f5a-8697-9749d55605ff",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8ee0ed9ed3e202a444b216299f1068de5bdc0325cca69bd97d19ed1540f12edc"
+  },
+  "id": "6dLvLXiWJDqiIB8e",
+  "tags": []
+}
